@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: bookingmanager
+  labels:
+    name: bookingmanager
+spec:
+  selector:
+    matchLabels:
+      name: bookingmanager
+  replicas: 2
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        name: bookingmanager
+    spec:
+      containers:
+      - name: bookingmanager
+        image: fwblue/bookingmanager:latest
+        ports:
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: bookingmanager
+  name: bookingmanager
+spec:
+  ports:
+  selector:
+    name: bookingmanager
+  type: LoadBalancer
