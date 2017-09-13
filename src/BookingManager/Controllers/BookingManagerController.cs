@@ -17,6 +17,12 @@ namespace BookingManager.Controllers
             return Guid.NewGuid().ToString();
         }
 
+        [HttpGet]
+        public String Get([FromBody] Booking bookingMessage)
+        {
+            return Guid.NewGuid().ToString();
+        }
+
 
     }
 }
